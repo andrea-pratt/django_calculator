@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from time import sleep
 from .models import Calculation
-import os
 
 
 def calculator(request):
@@ -19,11 +18,7 @@ def calculator(request):
 
 def save_calculation(request):
 
-    calculation = Calculation(calculation='test string from save_calculation')
-    calculation.save()
-
     calculations = ['hello', 'hi']
-
 
     first_operand = request.GET.get('first_operand')
     second_operand = request.GET.get('second_operand')
@@ -31,8 +26,7 @@ def save_calculation(request):
     operator = request.GET.get('operator')
     calculation = f'{first_operand} {operator} {second_operand} = {result}'
 
-    calculation = Calculation(calculation=calculation)
-    calculation = Calculation(calculation='test string from save_calculation')
+    calculation = Calculation(calculation=str(calculation))
     calculation.save()
 
     calculations = Calculation.objects.all().order_by('-id')[:10]
