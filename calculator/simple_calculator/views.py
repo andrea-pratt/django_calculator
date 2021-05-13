@@ -7,18 +7,12 @@ def calculator(request):
 
     sleep(.01) # allow time for ajax request to update database before query
 
-    calculation = Calculation(calculation='test string')
-    calculation.save()
-
-
     calculations = Calculation.objects.all().order_by('-id')[:10]
 
     return render(request, 'simple_calculator/calculator.html', {'calculations': calculations})
 
 
 def save_calculation(request):
-
-    calculations = ['hello', 'hi']
 
     first_operand = request.GET.get('first_operand')
     second_operand = request.GET.get('second_operand')
