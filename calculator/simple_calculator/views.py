@@ -14,10 +14,10 @@ def calculator(request):
 
 def save_calculation(request):
 
-    first_operand = request.GET.get('first_operand')
-    second_operand = request.GET.get('second_operand')
-    result = request.GET.get('result')
-    operator = request.GET.get('operator')
+    first_operand = request.POST.get('first_operand')
+    second_operand = request.POST.get('second_operand')
+    result = request.POST.get('result')
+    operator = request.POST.get('operator')
     calculation = f'{first_operand} {operator} {second_operand} = {result}'
 
     calculation = Calculation(calculation=str(calculation))
