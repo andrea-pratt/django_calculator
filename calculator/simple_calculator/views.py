@@ -24,18 +24,18 @@ def save_calculation(request):
 
     calculations = ['hello', 'hi']
 
-    if request.method == 'POST':
-        first_operand = request.POST.get('first_operand')
-        second_operand = request.POST.get('second_operand')
-        result = request.POST.get('result')
-        operator = request.POST.get('operator')
-        calculation = f'{first_operand} {operator} {second_operand} = {result}'
 
-        calculation = Calculation(calculation=calculation)
-        calculation = Calculation(calculation='test string from save_calculation')
-        calculation.save()
+    first_operand = request.GET.get('first_operand')
+    second_operand = request.GET.get('second_operand')
+    result = request.GET.get('result')
+    operator = request.GET.get('operator')
+    calculation = f'{first_operand} {operator} {second_operand} = {result}'
 
-        calculations = Calculation.objects.all().order_by('-id')[:10]
+    calculation = Calculation(calculation=calculation)
+    calculation = Calculation(calculation='test string from save_calculation')
+    calculation.save()
+
+    calculations = Calculation.objects.all().order_by('-id')[:10]
     
     return render(request, 'simple_calculator/calculator.html', {'calculations': calculations})
 
