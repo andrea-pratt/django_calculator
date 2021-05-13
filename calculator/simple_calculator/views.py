@@ -19,6 +19,9 @@ def calculator(request):
 
 def save_calculation(request):
 
+    calculation = Calculation(calculation='test string from save_calculation')
+    calculation.save()
+
     if request.method == 'POST':
         first_operand = request.POST.get('first_operand')
         second_operand = request.POST.get('second_operand')
