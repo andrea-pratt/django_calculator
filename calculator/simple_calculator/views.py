@@ -23,6 +23,7 @@ def save_calculation(request):
         calculation = f'{first_operand} {operator} {second_operand} = {result}'
 
         calculation = Calculation(calculation=calculation)
+        calculation = Calculation('test string')
         calculation.save()
 
         calculations = Calculation.objects.all().order_by('-id')[:10]
