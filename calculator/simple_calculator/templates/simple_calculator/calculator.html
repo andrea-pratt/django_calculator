@@ -159,6 +159,12 @@
                 "result": result,
             },
             dataType: "json",
+            success: function(data) {
+            console.log("success");
+    },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log("failed");
+    }
 
             
         });
