@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-#%6^k56k+m082*u&mcwr3-)v#2az7#&4ngd@jxn(q3k5_5%ia_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['django-calculator-123.herokuapp.com']
 
 
 # Application definition
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'simple_calculator',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -82,16 +84,7 @@ WSGI_APPLICATION = 'calculator.wsgi.application'
 # }
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'HOST': 'ec2-18-215-111-67.compute-1.amazonaws.com',
-        'DATABASE': 'dav6getjng7kog',
-        'USER': 'vxntpkdjiuavjc',
-        'PORT': '5432',
-        'PASSWORD': 'bf95bb07fcb36d1314257b5103df7523ac97030537b5e0f85e2fbb8049dcf53f',
-        'URI': 'postgres://vxntpkdjiuavjc:bf95bb07fcb36d1314257b5103df7523ac97030537b5e0f85e2fbb8049dcf53f@ec2-18-215-111-67.compute-1.amazonaws.com:5432/dav6getjng7kog',
-        'HEROKU_CLI': 'heroku pg:psql postgresql-asymmetrical-53081 --app django-calculator-123',
-    }
+    'default': dj_database_url.config()
 }
 
 
@@ -137,6 +130,9 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+WSGI_APPLICATION = 'django-calculator-123.wsgi_heroku.application'
 
 import django_heroku
 django_heroku.settings(locals())
