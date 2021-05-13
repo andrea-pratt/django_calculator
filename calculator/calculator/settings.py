@@ -74,10 +74,23 @@ WSGI_APPLICATION = 'calculator.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': 'ec2-18-215-111-67.compute-1.amazonaws.com',
+        'DATABASE': 'dav6getjng7kog',
+        'USER': 'vxntpkdjiuavjc',
+        'PORT': '5432',
+        'PASSWORD': 'bf95bb07fcb36d1314257b5103df7523ac97030537b5e0f85e2fbb8049dcf53f',
+        'URI': 'postgres://vxntpkdjiuavjc:bf95bb07fcb36d1314257b5103df7523ac97030537b5e0f85e2fbb8049dcf53f@ec2-18-215-111-67.compute-1.amazonaws.com:5432/dav6getjng7kog',
+        'HEROKU_CLI': 'heroku pg:psql postgresql-asymmetrical-53081 --app django-calculator-123',
     }
 }
 
