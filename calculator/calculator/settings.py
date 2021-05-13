@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+#from calculator.simple_calculator.views import calculator
 from pathlib import Path
 import dj_database_url
 
@@ -130,7 +131,8 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-WSGI_APPLICATION = 'django-calculator-123.wsgi_heroku.application'
+#WSGI_APPLICATION = 'django-calculator-123.wsgi_heroku.application'
+WSGI_APPLICATION = 'calculator.wsgi.application'
 
 import django_heroku
 django_heroku.settings(locals())
