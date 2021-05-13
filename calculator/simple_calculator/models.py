@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.fields import DateTimeField
+from django.db.models.fields import CharField, DateTimeField
 
 
 class Calculation(models.Model):
@@ -8,3 +8,7 @@ class Calculation(models.Model):
 
     def __str__(self):
         return str(self.calculation)
+
+
+class TestTable(models.Model):
+    test = CharField(max_length=200)

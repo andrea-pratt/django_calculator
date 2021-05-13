@@ -1,1 +1,1 @@
-web: gunicorn calculator.wsgi
+web: gunicorn --pythonpath django calculator.wsgi_heroku --log-file -
