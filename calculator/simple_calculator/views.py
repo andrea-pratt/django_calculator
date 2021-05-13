@@ -6,7 +6,11 @@ import os
 
 def calculator(request):
 
-    sleep(3) # allow time for ajax request to update database before query
+    sleep(.01) # allow time for ajax request to update database before query
+
+    calculation = Calculation('test string')
+    calculation.save()
+
 
     calculations = Calculation.objects.all().order_by('-id')[:10]
 
