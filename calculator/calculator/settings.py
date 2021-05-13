@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'simple_calculator',
-    'storages',
 ]
 
 MIDDLEWARE = [
@@ -69,8 +68,6 @@ TEMPLATES = [
         },
     },
 ]
-
-WSGI_APPLICATION = 'calculator.wsgi.application'
 
 
 # Database
