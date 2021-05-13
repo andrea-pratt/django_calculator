@@ -8,7 +8,7 @@ def calculator(request):
 
     sleep(.01) # allow time for ajax request to update database before query
 
-    calculation = Calculation(1, 'test string')
+    calculation = Calculation(calculation='test string')
     calculation.save()
 
 
