@@ -153,6 +153,7 @@
             type: "POST",
             url: 'calculation/save/',
             data: {
+                "csrfmiddlewaretoken": csrftoken,
                 "first_operand": firstOperand,
                 "second_operand": secondOperand,
                 "operator": operator,
