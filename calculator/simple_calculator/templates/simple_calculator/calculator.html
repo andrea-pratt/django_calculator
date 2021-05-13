@@ -149,8 +149,8 @@
         }
 
         $.ajax({ 
-            headers: {'X-CSRFToken': csrftoken},
-            type: "POST",
+            //headers: {'X-CSRFToken': csrftoken},
+            type: "GET",
             url: 'calculation/save/',
             data: {
                 "first_operand": firstOperand,
