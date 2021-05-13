@@ -9,6 +9,3 @@ class Calculation(models.Model):
     def __str__(self):
         return str(self.calculation)
 
-
-class TestTable(models.Model):
-    test = CharField(max_length=200)
