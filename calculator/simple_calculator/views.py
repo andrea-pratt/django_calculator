@@ -8,7 +8,7 @@ def calculator(request):
 
     sleep(0.01) # allow time for ajax request to update database before query
 
-    calculations = Calculation.objects.all().order_by('-creation_date')[:10]
+    calculations = Calculation.objects.all().order_by('-id')[:10]
 
     return render(request, 'simple_calculator/calculator.html', {'calculations': calculations})
 
@@ -25,7 +25,7 @@ def save_calculation(request):
         calculation = Calculation(calculation=calculation)
         calculation.save()
 
-        calculations = Calculation.objects.all().order_by('-creation_date')[:10]
+        calculations = Calculation.objects.all().order_by('-id')[:10]
     
     return render(request, 'simple_calculator/calculator.html', {'calculations': calculations})
 
