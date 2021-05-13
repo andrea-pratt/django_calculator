@@ -1,0 +1,232 @@
+{% extends 'simple_calculator/base.html' %}
+{% block content %}
+{% load static %}
+
+
+<link rel="stylesheet" href="{% static 'css/base_style.css' %}" type="text/css"></link>
+
+<form id="calculator"></form>
+
+<div class="calculator">
+
+    <input type="text" class="calculator-screen" value="" disabled />
+    
+    <div class="calculator-keys">
+      
+      <button type="button" class="operator" value="+">+</button>
+      <button type="button" class="operator" value="-">-</button>
+      <button type="button" class="operator" value="*">&times;</button>
+      <button type="button" class="operator" value="/">&divide;</button>
+  
+      <button type="button" value="7">7</button>
+      <button type="button" value="8">8</button>
+      <button type="button" value="9">9</button>
+  
+  
+      <button type="button" value="4">4</button>
+      <button type="button" value="5">5</button>
+      <button type="button" value="6">6</button>
+  
+  
+      <button type="button" value="1">1</button>
+      <button type="button" value="2">2</button>
+      <button type="button" value="3">3</button>
+  
+  
+      <button type="button" value="0">0</button>
+      <button type="button" class="decimal" value=".">.</button>
+      <button type="button" class="all-clear" value="all-clear">AC</button>
+  
+      <button type="button" class="equal-sign operator" value="=">=</button>
+  
+    </div>
+</div>
+
+<h1 id="calculations-heading">Calculations:</h1>
+<div id="logged-calculation">
+    
+    {% for calculation in calculations %}
+
+        <h3>{{ calculation }}</h3>
+
+    {% endfor %}
+  
+</div>
+
+<script>
+    
+
+    const calculator = {
+        displayValue: '0',
+        firstOperand: null,
+        waitingForSecondOperand: false,
+        operator: null,
+    };
+
+    function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    function inputDigit(digit) {
+        const { displayValue, waitingForSecondOperand } = calculator;
+
+        if (waitingForSecondOperand === true) {
+            calculator.displayValue = digit;
+            calculator.waitingForSecondOperand = false;
+        } else {
+            calculator.displayValue = displayValue === '0' ? digit : displayValue + digit;
+        }
+
+        console.log(calculator);
+        }
+
+    function inputDecimal(dot) {
+        if (calculator.waitingForSecondOperand === true) {
+            calculator.displayValue = '0.'
+            calculator.waitingForSecondOperand = false;
+
+            return
+            }
+        if (!calculator.displayValue.includes(dot)) {
+            calculator.displayValue += dot;
+            }
+        }
+
+    function handleOperator(nextOperator) {
+        const { firstOperand, displayValue, operator } = calculator
+        const inputValue = parseFloat(displayValue);
+
+
+        if (operator && calculator.waitingForSecondOperand)  {
+
+            calculator.operator = nextOperator;
+
+            console.log(calculator);
+
+            return;
+
+        }
+
+        if (firstOperand == null && !isNaN(inputValue)) {
+            calculator.firstOperand = inputValue;
+        } else if (operator) {
+            const result = calculate(firstOperand, inputValue, operator);
+            calculator.displayValue = `${parseFloat(result.toFixed(7))}`;
+            calculator.firstOperand = result;
+        }
+
+        calculator.waitingForSecondOperand = true;
+        calculator.operator = nextOperator;
+        console.log(calculator);
+        }
+
+    function calculate(firstOperand, secondOperand, operator) {
+        var result = null;
+
+        if (operator === '+') {
+            result = firstOperand + secondOperand;
+        } else if (operator === '-') {
+            result = firstOperand - secondOperand;
+        } else if (operator === '*') {
+            result = firstOperand * secondOperand;
+        } else if (operator === '/') {
+            result = firstOperand / secondOperand;
+        } else {
+            return secondOperand;
+        }
+
+        $.ajax({ 
+            headers: {'X-CSRFToken': csrftoken},
+            type: "POST",
+            url: 'calculation/save/',
+            data: {
+                "first_operand": firstOperand,
+                "second_operand": secondOperand,
+                "operator": operator,
+                "result": result,
+            },
+            dataType: "json",
+
+            
+        });
+
+        document.getElementById("calculator").submit();
+        return result;
+        
+        }
+
+    function resetCalculator() {
+        calculator.displayValue = '0';
+        calculator.firstOperand = null;
+        calculator.waitingForSecondOperand = false;
+        calculator.operator = null;
+        console.log(calculator);
+        }
+
+    function updateDisplay() {
+        // select the element with class of `calculator-screen`
+        const display = document.querySelector('.calculator-screen');
+        // update the value of the element with the contents of `displayValue`
+        display.value = calculator.displayValue;
+
+    }
+
+    function updateDisplay() {
+        const display = document.querySelector('.calculator-screen');
+        display.value = calculator.displayValue;
+    }
+
+    updateDisplay();
+
+    const keys = document.querySelector('.calculator-keys');
+
+    keys.addEventListener('click', event => {
+        const { target } = event;
+        const { value } = target;
+        if (!target.matches('button')) {
+            return;
+        }
+
+        switch (value) {
+            case '+':
+            case '-':
+            case '*':
+            case '/':
+            case '=':
+            handleOperator(value);
+            break;
+            case '.':
+            inputDecimal(value);
+            break;
+            case 'all-clear':
+            resetCalculator();
+            break;
+            default:
+            // check if the key is an integer
+            if (Number.isInteger(parseFloat(value))) {
+                inputDigit(value);
+            }
+        }
+
+        updateDisplay();
+
+});
+
+
+</script>
+
+
+{% endblock %}
