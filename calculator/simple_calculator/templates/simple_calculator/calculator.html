@@ -52,7 +52,7 @@
     {% endfor %}
   
 </div>
-
+{% csrf_token %}
 <script>
     
 
@@ -149,7 +149,7 @@
         }
 
 
-
+        
         var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
 
         $.ajaxSetup({
